@@ -1,3 +1,3 @@
-extern void test();
+extern void asm_main();
 
-int	main(void) {test();}
+int	main(void) {asm_main();}
