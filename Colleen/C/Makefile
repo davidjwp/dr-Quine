@@ -14,7 +14,7 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 	./$(NAME) > tmp_Colleen ; diff tmp_Colleen Colleen.c
 
-%.o: %.c $(HEADER)
+%.o: %.c
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:

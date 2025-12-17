@@ -11,17 +11,18 @@ section .text
 	global _start
 
 _start:
-		mov bx, 1
-		mov rcx, qn
-		mov cl, byte [rcx]
-		test bx, bx
-		mov rbx, [count]
+		push la
+		push ls
 		mov rax, 1
 		mov rdi, 1
-		mov rdx, 1
+		mov rdx, 7
 	.loop:
-
+		pop rsi
 		syscall
+		mov rax, 1
+		pop rsi
+		syscall
+
 		; inc rsi
 		; mov r8b, byte [rsi]
 		; test r8b, r8b
