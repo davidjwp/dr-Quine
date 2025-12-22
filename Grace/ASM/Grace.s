@@ -1,3 +1,4 @@
+%macro start 0
 section .data
 	qn db 'section .data@',10,'	qn db Q@',10,'	p_nl db 64,39,44,49,48,44,39,0*',\
 	10,'	p_pnl db 42,39,44,92,10,9,49,48,44,39,0@',10,'	p_dnl db 33,39,44,49,48,44,49,48,44,39,0*',\
@@ -13,7 +14,7 @@ section .data
 	10,'	mov [is_print], byte 1@',10,'	mov rbx, qn@',10,'	mov rsi, p_quo@',10,'	call write*',\
 	10,'	jmp end_cond!',10,10,'end_print:@',10,'	mov rsi, p_end@',10,'	call write_loop@',10,'	lea rbx, [qn + 24]*',\
 	10,'	mov [is_print], byte 0@',10,'	jmp end_cond!',10,10,'_start:@',10,'	mov [is_print], byte 0*',\
-	10,'	mov rbx, qn@',10,'	mov rax, 1@',10,'	mov rdi, 1@',10,'	mov rdx, 1!',10,10,'	loop: &',59,'comment!',10,10,'		cmp [rbx], byte 33*',\
+	10,'	mov rbx, qn@',10,'	mov rax, [out]@',10,'	mov rdi, 1@',10,'	mov rdx, 1!',10,10,'	loop: &',59,'comment!',10,10,'		cmp [rbx], byte 33*',\
 	10,'		je p_33@',10,'		cmp [rbx], byte 38@',10,'		je p_38@',10,'		cmp [rbx], byte 42*',\
 	10,'		je p_42@',10,'		cmp [rbx], byte 64@',10,'		je p_64@',10,'		cmp [rbx], byte 81*',\
 	10,'		je p_81!',10,10,'		end_cond:!',10,10,'		mov rsi, rbx@',10,'		call write*',\
@@ -26,6 +27,7 @@ section .data
 	p_com db 38,39,44,53,57,44,39,0
 	p_quo db 39,0
 	p_end db 39,44,48,0
+	file_name db 46,47,71,114,97,99,101,95,107,105,100,46,99,0
 
 section .bss
 	is_print resb 1
@@ -97,10 +99,15 @@ end_print:
 	jmp end_cond
 
 _start:
+	mov rax, 2
+	mov rdi, file_name
+	mov rbx, 02 | 0100
+	mov rdx, 0644
+	syscall
+
 	mov [is_print], byte 0
-	mov rbx, qn
-	mov rax, 1
 	mov rdi, 1
+	mov rbx, qn
 	mov rdx, 1
 
 	loop: ;comment
@@ -134,3 +141,6 @@ _start:
 		mov rax, 60
 		xor rdi, rdi
 		syscall
+%endmacro
+
+start

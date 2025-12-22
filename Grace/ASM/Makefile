@@ -1,6 +1,6 @@
-NAME		= Colleen
+NAME		= Grace
 
-SRCS		= Colleen.s
+SRCS		= Grace.s
 
 NASM		= nasm
 
@@ -12,13 +12,13 @@ all:$(NAME)
 
 $(NAME): $(OBJS)
 	ld $(OBJS) -o $(NAME)
-	./$(NAME) > tmp_Colleen ; diff tmp_Colleen $(SRCS)
+	./$(NAME); diff Grace_kid.s $(SRCS)
 
 %.o: %.s
 	$(NASM) $(FLAGS) $< -o $@
 
 clean:
-	rm -f $(OBJS) tmp_asm_Colleen $(NAME)
+	rm -f $(OBJS) Grace_kid $(NAME)
 
 fclean: clean
 	rm -f $(NAME)
