@@ -3,7 +3,7 @@ section .data
 	10,'	p_pnl db 42,39,44,92,10,9,49,48,44,39,0@',10,'	p_dnl db 33,39,44,49,48,44,49,48,44,39,0*',\
 	10,'	p_com db 38,39,44,53,57,44,39,0@',10,'	p_quo db 39,0@',10,'	p_end db 39,44,48,0!',10,10,'section .bss*',\
 	10,'	is_print resb 1!',10,10,'section .text@',10,'	global _start!',10,10,'write:@',10,'	syscall*',\
-	10,'	ret!',10,10,'print:@',10,'	add rbx, r9!',10,10,'write_loop:@',10,'&',59,'comment@',10,'	syscall@',10,'	inc rsi*',\
+	10,'	ret!',10,10,'print:@',10,'	add rbx, r9!',10,10,'write_loop:@',10,'&',47,42,10,'	comment&',10,42,47,10,'	syscall@',10,'	inc rsi*',\
 	10,'	mov r8b, byte [rsi]@',10,'	test r8b, r8b@',10,'	jne write_loop@',10,'	ret!',10,10,'eval:@',10,'	xor r8, r8*',\
 	10,'	lea r8, [rel loop]@',10,'	push r8@',10,'	mov r8b, [is_print]@',10,'	test r8b, r8b@',10,'	jne print*',\
 	10,'	inc rbx@',10,'	jmp end_cond!',10,10,'p_33:@',10,'	mov rsi, p_dnl@',10,'	mov r9, 3@',10,'	jmp eval!',10,10,'p_38:*',\
@@ -23,7 +23,8 @@ section .data
 	p_nl db 64,39,44,49,48,44,39,0
 	p_pnl db 42,39,44,92,10,9,49,48,44,39,0
 	p_dnl db 33,39,44,49,48,44,49,48,44,39,0
-	p_com db 38,39,44,53,57,44,39,0
+	p_com_open db 38,39,44,52,55,44,52,50,44,49,48,44,39,0
+	; p_com_clos db 38,39,44,52,55,44,52,50,44,49,48,44,39,0
 	p_quo db 39,0
 	p_end db 39,44,48,0
 
@@ -41,7 +42,9 @@ print:
 	add rbx, r9
 
 write_loop:
-;comment
+/*
+	comment 1
+*/
 	syscall
 	inc rsi
 	mov r8b, byte [rsi]
