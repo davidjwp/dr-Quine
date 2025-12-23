@@ -1,7 +1,8 @@
 section .data
 	qn db 'section .data@',10,'	qn db Q@',10,'	p_nl db 64,39,44,49,48,44,39,0*',\
 	10,'	p_pnl db 42,39,44,92,10,9,49,48,44,39,0@',10,'	p_dnl db 33,39,44,49,48,44,49,48,44,39,0*',\
-	10,'	p_com db 38,39,44,53,57,44,39,0@',10,'	p_quo db 39,0@',10,'	p_end db 39,44,48,0!',10,10,'section .bss*',\
+	10,'	p_com_open db 38,39,44,52,55,44,52,50,44,49,48,44,39,0@',10,'	p_com_close db 38,39,44,49,48,44,52,50,44,49,48,44,39,0*',\
+	10,'	p_quo db 39,0@',10,'	p_end db 39,44,48,0!',10,10,'section .bss*',\
 	10,'	is_print resb 1!',10,10,'section .text@',10,'	global _start!',10,10,'write:@',10,'	syscall*',\
 	10,'	ret!',10,10,'print:@',10,'	add rbx, r9!',10,10,'write_loop:@',10,'&',47,42,10,'	comment&',10,42,47,10,'	syscall@',10,'	inc rsi*',\
 	10,'	mov r8b, byte [rsi]@',10,'	test r8b, r8b@',10,'	jne write_loop@',10,'	ret!',10,10,'eval:@',10,'	xor r8, r8*',\
@@ -24,7 +25,7 @@ section .data
 	p_pnl db 42,39,44,92,10,9,49,48,44,39,0
 	p_dnl db 33,39,44,49,48,44,49,48,44,39,0
 	p_com_open db 38,39,44,52,55,44,52,50,44,49,48,44,39,0
-	; p_com_clos db 38,39,44,52,55,44,52,50,44,49,48,44,39,0
+	p_com_clos db 38,39,44,49,48,44,52,50,44,49,48,44,39,0
 	p_quo db 39,0
 	p_end db 39,44,48,0
 
@@ -68,9 +69,28 @@ p_33:
 	jmp eval
 
 p_38:
-	mov rsi, p_com
-	mov r9, 2
-	jmp eval
+	mov rsi, p_com_open
+	xor r8, r8
+	lea r8, [p_com_c]
+	push r8
+	mov r8b, [is_print]
+	test r8b, r8b
+	jnz p_com_o
+	inc rbx
+	jmp end_cond
+
+p_com_o:
+	mov rsi, p_com_open
+	mov r9, 3
+	jmp print
+
+
+p_com_c:
+	mov rsi, p_com_c
+	mov r9, 3
+	lea rax, [end_cond]
+	push rax
+	jmp print
 
 p_42:
 	mov rsi, p_pnl
@@ -106,8 +126,9 @@ _start:
 	mov rdi, 1
 	mov rdx, 1
 
-	loop: ;comment
-
+	loop: /*
+	comment
+*/
 		cmp [rbx], byte 33
 		je p_33
 		cmp [rbx], byte 38
@@ -133,7 +154,9 @@ _start:
 		test r8b, r8b
 		jnz end_print
 
-		;comment
+		/*
+	comment
+*/
 		mov rax, 60
 		xor rdi, rdi
 		syscall
