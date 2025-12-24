@@ -8,7 +8,9 @@ section .data
 	10,'	mov r8b, byte [rsi]@',10,'	test r8b, r8b@',10,'	jne write_loop@',10,'	ret!',10,10,'eval:@',10,'	xor r8, r8*',\
 	10,'	lea r8, [rel loop]@',10,'	push r8@',10,'	mov r8b, [is_print]@',10,'	test r8b, r8b@',10,'	jne print*',\
 	10,'	inc rbx@',10,'	jmp end_cond!',10,10,'p_33:@',10,'	mov rsi, p_dnl@',10,'	mov r9, 3@',10,'	jmp eval!',10,10,'p_38:*',\
-	10,'	mov rsi, p_com_open@',10,'	xor r8, r8@',10,'	lea ',10,'	mov r9, 2@',10,'	jmp eval!',10,10,'p_42:@',10,'	mov rsi, p_pnl*',\
+	10,'	mov rsi, p_com_open@',10,'	xor r8, r8@',10,'	lea r8, [p_com_c]@',10,'	push r8@',10,'	mov r8b, [is_print]@',10,'	test r8b, r8b@',10,'	jnz p_com_o*',\
+	10,'	inc rbx@',10,'	jmp end_cond!',10,10,'p_com_o:@',10,'	mov rsi, p_com_open@',10,'	mov r9, 3@',10,'	jmp print!',10,10,'p_com_c:*',\
+	10,'	mov rsi, p_com_c@',10,'	mov r9, 3',10,'	lea rax, [end_cond]@',10,'	push rax@',10'	jmp print!'10,10,'p_42:@',10,'	mov rsi, p_pnl*',\
 	10,'	mov r9, 2@',10,'	jmp eval!',10,10,'p_64:@',10,'	mov rsi, p_nl@',10,'	mov r9, 2*',\
 	10,'	jmp eval!',10,10,'p_81:@',10,'	mov r8b, byte [is_print]@',10,'	test r8b, r8b@',10,'	jnz end_cond*',\
 	10,'	mov [is_print], byte 1@',10,'	mov rbx, qn@',10,'	mov rsi, p_quo@',10,'	call write*',\
