@@ -1,6 +1,6 @@
 NAME		= Colleen
 
-SRCS		= Colleen.s
+SRCS		= Colleen.S
 
 NASM		= nasm
 
@@ -8,21 +8,23 @@ FLAGS		= -f elf64 -g
 
 OBJS		= $(SRCS:.s=.o)
 
+ASM_SRC		= $(SRCS:.S=.s)
+
 all:$(NAME)
 
 $(NAME): $(OBJS)
 	ld $(OBJS) -o $(NAME)
 	./$(NAME) > tmp_Colleen 
-# 	; diff tmp_Colleen $(SRCS)
+	diff tmp_Colleen $(ASM_SRC)
 
 %.o: %.s
 	$(NASM) $(FLAGS) $< -o $@
 
 %.s: %.S
-	cpp $< -o $@
+	cpp -p $< -o $@
 
 clean:
-	rm -f $(OBJS) tmp_asm_Colleen $(NAME)
+	rm -f $(OBJS) tmp_Colleen
 
 fclean: clean
 	rm -f $(NAME)
