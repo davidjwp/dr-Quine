@@ -1,28 +1,26 @@
 NAME		= Grace
 
-SRCS		= Grace.s
+FLAGS		= -f elf64 -g
 
-NASM		= nasm
+OBJS		= $(NAME).o
 
-FLAGS		= -f elf64
+SOBJS		= $(NAME).S
 
-OBJS		= $(SRCS:.s=.o)
+SRCS		= $(NAME).s
 
-all:$(NAME)
-
-$(NAME): $(OBJS)
+$(NAME):
+	cpp -P $(SRCS) -o $(SOBJS)
+	nasm $(FLAGS) $(SOBJS) -o $(OBJS)
 	ld $(OBJS) -o $(NAME)
-	./$(NAME); diff Grace_kid.s $(SRCS)
-
-%.o: %.s
-	$(NASM) $(FLAGS) $< -o $@
+	./$(NAME) > Grace_kid
+	diff Grace_kid $(SRCS)
 
 clean:
-	rm -f $(OBJS) Grace_kid $(NAME)
+	rm -f $(OBJS) $(SOBJS) Grace_kid
 
 fclean: clean
 	rm -f $(NAME)
 
-re: fclean all
+re: fclean $(NAME)
 
 .PHONY: fclean clean all
