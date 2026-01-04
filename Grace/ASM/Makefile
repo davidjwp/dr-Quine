@@ -12,11 +12,11 @@ $(NAME):
 	cpp -P $(SRCS) -o $(SOBJS)
 	nasm $(FLAGS) $(SOBJS) -o $(OBJS)
 	ld $(OBJS) -o $(NAME)
-	./$(NAME) > Grace_kid
-	diff Grace_kid $(SRCS)
+	./$(NAME)
+	diff Grace_kid.s $(SRCS)
 
 clean:
-	rm -f $(OBJS) $(SOBJS) Grace_kid
+	rm -f $(OBJS) $(SOBJS) Grace_kid.s 
 
 fclean: clean
 	rm -f $(NAME)
