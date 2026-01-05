@@ -9,9 +9,10 @@ section .data
 	10,'	mov [msg], byte 0@',10,'	mov rsi, p_com_clos@',10,'	mov r9, 4@',10,'	jmp print!',10,10,'p_35:@',10,'	mov rsi, p_pnl@',10,'	mov r9, 2@',10,'	jmp eval!',10,10,'p_64:@',10,'	mov rsi, p_nl@',10,'	mov r9, 2@',10,'	jmp eval!',10,10,'p_81:#',\
 	10,'	mov r8b, byte [is_print]@',10,'	test r8b, r8b@',10,'	jnz end_cond@',10,'	mov [is_print], byte 1@',10,'	mov rbx, qn@',10,'	mov rsi, p_quo@',10,'	call write@',10,'	jmp end_cond!',10,10,'end_print:@',10,'	mov rsi, p_end@',10,'	call write_loop#',\
 	10,'	lea rbx, [qn + 40]@',10,'	mov [is_print], byte 0@',10,'	jmp end_cond!',10,10,'_start:@',10,'	mov rax, 2@',10,'	mov rdi, p_fl@',10,'	mov rsi, 02 | 0100@',10,'	mov rdx, 0422@',10,'	syscall!',10,10,'	mov [is_print], byte 0#',\
-	10,'	mov [msg], byte 0@',10,'	mov rbx, qn@',10,'	mov rdi, rax@',10,'	mov rax, 1@',10,'	mov rdx, 1!',10,10,'	loop:@',10,'		cmp [rbx], byte 33@',10,'		je p_33@',10,'		cmp [rbx], byte 38@',10,'		je p_38#',\
+	10,'	mov [msg], byte 0@',10,'	mov rbx, qn@',10,'	mov rdi, rax@',10,'	mov rax, 1@',10,'	mov rdx, 1!',10,10,'	loop: &',47,42,10,'	comment&',10,42,47,10,'		cmp [rbx], byte 33@',10,'		je p_33@',10,'		cmp [rbx], byte 38@',10,'		je p_38#',\
 	10,'		cmp [rbx], byte 35@',10,'		je p_35@',10,'		cmp [rbx], byte 64@',10,'		je p_64@',10,'		cmp [rbx], byte 81@',10,'		je p_81!',10,10,'		end_cond:!',10,10,'		mov rsi, rbx@',10,'		call write#',\
-	10,'		inc rbx!',10,10,'		mov r8b, byte [rbx]@',10,'		test r8b, r8b@',10,'		jnz loop!',10,10,'		mov r8b, byte [is_print]@',10,'		test r8b, r8b@',10,'		jnz end_print!',10,10,'		mov rax, 60@',10,'		xor rdi, rdi@',10,'		syscall@',10,'%endmacro!',10,10,'start',0
+	10,'		inc rbx!',10,10,'		mov r8b, byte [rbx]@',10,'		test r8b, r8b@',10,'		jnz loop!',10,10,'		mov r8b, byte [is_print]@',10,'		test r8b, r8b@',10,'		jnz end_print!',10,10,'		&',47,42,10,'	comment&',10,42,47,10,'		mov rax, 60#',\
+	10,'		xor rdi, rdi@',10,'		syscall@',10,'%endmacro!',10,10,'start',0
 	p_fl db 46,47,71,114,97,99,101,95,107,105,100,46,115,0
 	p_nl db 64,39,44,49,48,44,39,0
 	p_pnl db 35,39,44,92,10,9,49,48,44,39,0
@@ -128,7 +129,9 @@ _start:
 	mov rax, 1
 	mov rdx, 1
 
-	loop:
+	loop: /*
+	comment
+*/
 		cmp [rbx], byte 33
 		je p_33
 		cmp [rbx], byte 38
@@ -154,6 +157,9 @@ _start:
 		test r8b, r8b
 		jnz end_print
 
+		/*
+	comment
+*/
 		mov rax, 60
 		xor rdi, rdi
 		syscall

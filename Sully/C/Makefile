@@ -2,9 +2,9 @@ CC			= gcc
 
 CFLAGS		= -g3 -Werror -Wall -Wextra
 
-NAME		= Colleen
+NAME		= Grace
 
-SRCS		= C-Quine.c
+SRCS		= Grace.c
 
 OBJS		= $(SRCS:.c=.o)
 
@@ -12,13 +12,13 @@ all:$(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) ;
-	./$(NAME) > tmp_Colleen ; diff tmp_Colleen Colleen.c
+	./$(NAME); diff Grace_kid.c Grace.c
 
 %.o: %.c $(HEADER)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
-	rm -f $(OBJS) tmp_Colleen
+	rm -f $(OBJS) Grace_kid.c
 
 fclean: clean
 	rm -f $(NAME)
