@@ -2,9 +2,9 @@ CC			= gcc
 
 CFLAGS		= -g3 -Werror -Wall -Wextra
 
-NAME		= Grace
+NAME		= Sully
 
-SRCS		= Grace.c
+SRCS		= $(NAME).c
 
 OBJS		= $(SRCS:.c=.o)
 
@@ -12,7 +12,7 @@ all:$(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) ;
-	./$(NAME); diff Grace_kid.c Grace.c
+	./$(NAME);
 
 %.o: %.c $(HEADER)
 	$(CC) -c $(CFLAGS) $< -o $@

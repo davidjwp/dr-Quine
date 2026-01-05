@@ -1,4 +1,4 @@
-NAME		= Grace
+NAME		= Sully
 
 FLAGS		= -f elf64 -g
 
@@ -8,15 +8,16 @@ SOBJS		= $(NAME).S
 
 SRCS		= $(NAME).s
 
+OUTPUTS		= '$(NAME)_X'
+
 $(NAME):
 	cpp -P $(SRCS) -o $(SOBJS)
 	nasm $(FLAGS) $(SOBJS) -o $(OBJS)
 	ld $(OBJS) -o $(NAME)
 	./$(NAME)
-	diff Grace_kid.s $(SRCS)
 
 clean:
-	rm -f $(OBJS) $(SOBJS) Grace_kid.s 
+	rm -f $(OBJS) $(SOBJS) 
 
 fclean: clean
 	rm -f $(NAME)
