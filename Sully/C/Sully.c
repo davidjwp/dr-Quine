@@ -1,27 +1,43 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
-//10 until X
-char []itoa(int X){int len=0; while(X/10)len++;
-    char s[len] = 0;
-    while (len--) s[len] = (X - 48); 
-return ((char[]){46,47,83,117,108,108,121,95,107,105,s})
-}
-
-#define MACRO(X) int main() {char *file= malloc(sizeof(char) * );int p=0;char *s = "#include <unistd.h>@\
+int X = 5;
+int p=0,FilLen=0;
+char*MakeFileString(int x){int len=0,tmp=x;if(!x)len=1;while(tmp){len++;tmp/=10;};FilLen=len;
+char *s=(char*)malloc(sizeof(char)*(9+len));if(!s){write(1,(char[]){101,114,114,32,97,108,108,111,99},9);exit(1);}
+char *fil=(char[]){83,117,108,108,121,95,46,99,0};
+for (int i=0;i<(len+9);i++){if(i==6)i+=len;s[i]=*fil;fil++;}
+if (!x){s[6]=48;return (s);}while(x){s[6+(len-1)] = 48+(x%10);x/=10;len--;}return (s);}
+int main(void){char *s = "#include <unistd.h>@\
 #include <fcntl.h>@\
-#define MACRO(X) int main() {int p=0;char *s = $;@\
-int out = open((char[]){46,47,71,114,97,99,101,95,107,105,100,46,99,0},O_RDWR | O_CREAT, 0644);@\
-for(char *cpy=s;*cpy;cpy++){/*comment*/@\
+#include <stdlib.h>@\
+int X = ^;@\
+int p=0,FilLen=0;@\
+char*MakeFileString(int x){int len=0,tmp=x;if(!x)len=1;while(tmp){len++;tmp/=10;};FilLen=len;@\
+char *s=(char*)malloc(sizeof(char)*(9+len));if(!s){write(1,(char[]){101,114,114,32,97,108,108,111,99},9);exit(1);}@\
+char *fil=(char[]){83,117,108,108,121,95,46,99,0};@\
+for (int i=0;i<(len+9);i++){if(i==6)i+=len;s[i]=*fil;fil++;}@\
+if (!x){s[6]=48;return (s);}while(x){s[6+(len-1)] = 48+(x%10);x/=10;len--;}return (s);}@\
+int main(void){char *s = $;@\
+while (X--){@\
+char*fil=MakeFileString(X);@\
+int out = open(fil,O_RDWR | O_CREAT, 0644);@\
+for(char *cpy=s;*cpy;cpy++){@\
+if (*cpy == 126 && !p) {write(out,(char[]){37,0},1);cpy++;}@\
+if (*cpy == 94 && !p) {write(out,&(fil[6]),FilLen);free(fil); cpy++;}@\
 if (*cpy == 64 && p) {write(out,(char[]){64,92,10},3); cpy++;}@\
-if (*cpy == 64 && !p) {(cpy-s)>65&&(cpy-s)<500?write(out,(char[]){92,10},2):write(out,(char[]){10},1); cpy++;}@\
+if (*cpy == 64 && !p) {(cpy-s)>470&&(cpy-s)<480?write(out,(char[]){92,10},2):write(out,(char[]){10},1); cpy++;}@\
 if (*cpy == 36 && !p) {p = 1; write(out,(char[]){34},1); cpy = s;}@\
-if (!(*(cpy+1)) && p) {p = 0; write(out,(char[]){*cpy,34},2); cpy = (s + 87);}write(out,(char[]){*cpy},1);}}@\
-MACRO()";\
-int out = open((char[]){46,47,83,117,108,108,121,95,107,105,itao(),46,99,0},O_RDWR | O_CREAT, 0644);\
-for(char *cpy=s;*cpy;cpy++){/*comment*/\
-if (*cpy == 64 && p) {write(out,(char[]){64,92,10},3); cpy++;}\
-if (*cpy == 64 && !p) {(cpy-s)>65&&(cpy-s)<500?write(out,(char[]){92,10},2):write(out,(char[]){10},1); cpy++;}\
-if (*cpy == 36 && !p) {p = 1; write(out,(char[]){34},1); cpy = s;}\
-if (!(*(cpy+1)) && p) {p = 0; write(out,(char[]){*cpy,34},2); cpy = (s + 87);}write(out,(char[]){*cpy},1);}}
-MACRO()
+if (!(*(cpy+1)) && p) {p = 0; write(out,(char[]){*cpy,34},2); cpy = (s+523);}@\
+write(out,(char[]){*cpy},1);}}}";
+while (X--){
+char*fil=MakeFileString(X);
+int out = open(fil,O_RDWR | O_CREAT, 0644);
+for(char *cpy=s;*cpy;cpy++){
+if (*cpy == 126 && !p) {write(out,(char[]){37,0},1);cpy++;}
+if (*cpy == 94 && !p) {write(out,&(fil[6]),FilLen);free(fil); cpy++;}
+if (*cpy == 64 && p) {write(out,(char[]){64,92,10},3); cpy++;}
+if (*cpy == 64 && !p) {(cpy-s)>470&&(cpy-s)<480?write(out,(char[]){92,10},2):write(out,(char[]){10},1); cpy++;}
+if (*cpy == 36 && !p) {p = 1; write(out,(char[]){34},1); cpy = s;}
+if (!(*(cpy+1)) && p) {p = 0; write(out,(char[]){*cpy,34},2); cpy = (s+523);}
+write(out,(char[]){*cpy},1);}}}

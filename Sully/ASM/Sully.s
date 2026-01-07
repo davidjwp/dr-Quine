@@ -19,10 +19,13 @@ section .data
 	p_dnl db 33,39,44,49,48,44,49,48,44,39,0
 	p_com_open db 38,39,44,52,55,44,52,50,44,49,48,44,39,0
 	p_com_clos db 38,39,44,49,48,44,52,50,44,52,55,44,49,48,44,39,0
+	ffil db 46,47,83,117,108,108,121,95,107,105,0
+	lfil db 46,99,0
 	p_quo db 39,0
 	p_end db 39,44,48,0
 
 section .bss
+	file_name resb 13
 	is_print resb 1
 	msg resb 1
 

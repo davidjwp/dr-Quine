@@ -11,14 +11,14 @@ OBJS		= $(SRCS:.c=.o)
 all:$(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) ;
-	./$(NAME);
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) 
+	./$(NAME)
 
 %.o: %.c $(HEADER)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
-	rm -f $(OBJS) Grace_kid.c
+	rm -f $(OBJS) Sully_*.c
 
 fclean: clean
 	rm -f $(NAME)
