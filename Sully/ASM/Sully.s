@@ -68,7 +68,15 @@ asmbl_fln:;this is no good because brk rdi is an adress not an int
 	mov r8b, byte [init_int]
 	mov r9b, byte [flnu_len]
 	xor cl, cl
+	;taken 
+
+	mov edx, 0        ; clear dividend
+	mov eax, 0x8003   ; dividend
+	mov ecx, 0x100    ; divisor
+	div ecx           ; EAX = 0x80, EDX = 0x3
 	L3:
+
+		mov r8b, byte [rdx]
 		mov cl, byte 48 + [r8b % 10]
 		mov [rdi+(6+(r9b-1))], cl
 		div r8b, 10
