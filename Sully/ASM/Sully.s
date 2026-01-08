@@ -147,7 +147,7 @@ start_loop:
 	mov rdx, 0422
 	syscall
 
-	mov rax 12
+	mov rax, 12
 	syscall
 
 	mov [is_print], byte 0
