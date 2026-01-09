@@ -31,6 +31,12 @@ section .bss
 section .text
 	global _start
 
+divide:
+	xor rax, rax                                                    	mov rax, r8
+        mov rcx, 0xa
+        div rcx
+        ret
+
 asmbl_fln:
 	mov rax, 12
 	xor rdi, rdi
@@ -74,7 +80,6 @@ asmbl_fln:
 	cmp [init_int], byte 0
 	jne J1
 	mov byte [rdi+6], 48
-	cc:
 	ret
 	J1:
 	mov r8, qword [init_int]
@@ -151,11 +156,25 @@ p_73:
 	jmp eval
 
 	D1:	
-		cmp [rbx], 
+		first_digit:
+		cmp r8b, 10
+		jl cont
+		
+		call divide
+		mov r8, rax
+
+
+		jge first_digit
+		jmp firsr
+		cont:
 
 		mov rax, r8
 	
-	mov rax,
+	mov rax, 1
+	syscall
+	
+	cmp r8b, byte 0
+	jne D1
 
 p_81:
 	mov r8b, byte [is_print]
