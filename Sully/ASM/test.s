@@ -2,15 +2,22 @@
 section .data
 	p_fl db 83,117,108,108,121,95,46,115,0;file name
 section .bss
-	init_int resb 1 
+	init_int resq 1 
 	flnu_len resb 1 
 
 section .text
 	global _start
 
+	divide:
+	xor rax, rax
+	mov al, r8b
+	mov rcx, 0xa
+	div rcx
+	ret
+
 _start:
 	mov [flnu_len], byte 0
-	mov [init_int], byte 5
+	mov qword [init_int], 524
 
 asmbl_fln:
 	mov rax, 12
@@ -46,9 +53,9 @@ asmbl_fln:
 		cont:
 		mov [rdi], byte cl
 		inc rdi
+		inc rax
 		test cl, cl
 		jnz L2
-	
 	xor rax, rax
 	cmp [init_int], byte 0
 	jne J1
@@ -59,26 +66,21 @@ asmbl_fln:
 	pop rdi 
 	mov r8b, byte [init_int]
 	mov r9b, byte [flnu_len]
-	xor rcx, rcx
-	;taken 
-
 
 	L3:
-		mov al, r8b   	; dividend
-		mov rcx, 0xa   ; divisor
-		div rcx         ; RAX = result /, RDX = result %
+		call divide
 
-		add rdx, byte 48
+		add rdx, 48
 		lea rax, [r9 + 5]
-		mov [rdi + rax], rdx
+		mov byte [rdi + rax], dl
+		xor rdx, rdx	
 
-		; xor r10, r10
-		; add r10b, 6
-		; mov r10b, r9b - 1
+		call divide
+		xor rdx, rdx
+		mov r8, rax
 
-		; mov [rdi + r10], dl
-
-		; div r8b, byte10
 		dec r9b
 		test r8b, r8b
 		jnz L3
+
+	cc:

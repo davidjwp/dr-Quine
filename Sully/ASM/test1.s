@@ -6,14 +6,10 @@ section .text
     global _start
 
 _start:
-    mov rax, 12
-    syscall
-    push rax
-
-    mov rax, 12
-    pop rdi
-    add rdi, 9
-    syscall
+    mov rax, 5
+    mov rcx, 0xa
+    div rcx
+    ; xor rdx, -1
 
     ; mov qword [init_int], 2425
     ; mov [flnu_len], byte 4
