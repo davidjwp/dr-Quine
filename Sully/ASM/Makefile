@@ -17,7 +17,7 @@ $(NAME):
 	./$(NAME)
 
 clean:
-	rm -f $(OBJS) $(SOBJS) 
+	rm -f $(OBJS) $(SOBJS) $(NAME)_*.s
 
 fclean: clean
 	rm -f $(NAME)

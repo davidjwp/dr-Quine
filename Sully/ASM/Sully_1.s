@@ -52,9 +52,9 @@ divide:
 	xor rdx, rdx
 	xor rax, rax
 	mov rax, r8
-    mov rcx, 0xa
-    div rcx
-    ret
+	mov rcx, 0xa
+	div rcx
+	ret
 
 asmbl_fln:
 	mov rax, 12
@@ -93,7 +93,7 @@ asmbl_fln:
 		inc rax
 		test cl, cl
 		jnz L2
-	xor rax, rax	
+	xor rax, rax
 	pop rdi
 
 	cmp [init_int], byte 0
@@ -145,7 +145,6 @@ eval:
 	test r8b, r8b
 	jne print
 	inc rbx
-	pop r8
 	jmp end_cond
 
 p_33:
@@ -165,7 +164,7 @@ p_64:
 
 p_73:
 	lea rsi, [flnu + 6]
-	mov rsi, qword [flnu]
+mov rsi, qword [flnu]
 	add rsi, 6
 	mov r9b, byte [flnu_len]
 	mov [rsi + r9], byte 0
@@ -175,7 +174,7 @@ p_73:
 	test r8b, r8b
 	jz not_literal
 	jmp end_cond
-	not_literal:
+	not_literal
 
 	call print
 	mov r8, rdi
@@ -218,11 +217,12 @@ start_loop:
 	mov rsi, 02 | 0100
 	mov rdx, 0422
 	syscall
-	
+
 	mov rdi, rax
 
 	mov [is_print], byte 0
 	mov rbx, qn
+	mov rdi, rax
 	mov rax, 1
 	mov rdx, 1
 
@@ -252,6 +252,7 @@ start_loop:
 		test r8b, r8b
 		jnz end_print
 
+
 		mov r8, qword [init_int]
 		dec r8
 		mov qword [init_int], r8
@@ -262,3 +263,5 @@ start_loop:
 		mov rax, 60
 		xor rdi, rdi
 		syscall
+
+		; DONT FORGET TO CLOSE FDS 
