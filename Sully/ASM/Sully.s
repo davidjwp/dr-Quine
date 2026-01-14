@@ -207,10 +207,10 @@ end_print:
 _start:
 	mov qword [init_int], 5
 
-	cmp qword [init_int], 0
-	jz exit
-
-start_loop:
+	mov r8, qword [init_int]
+	dec r8
+	mov qword [init_int]
+	
 	mov [flnu_len], byte 0
 	call asmbl_fln
 
@@ -255,12 +255,7 @@ start_loop:
 		mov rax, 3
 		syscall
 
-		mov r8, qword [init_int]
-		dec r8
-		mov qword [init_int], r8
-		test r8, r8
-		jnz start_loop
-
+// fork wait, child comp, parent execute
 		exit:
 		mov rax, 60
 		xor rdi, rdi
