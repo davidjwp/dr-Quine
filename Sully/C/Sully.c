@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
-int X = 123;
+int X = 5;
 int p=0,FilLen=0;
 char*MakeFileString(int x){int len=0,tmp=x;if(!x)len=1;while(tmp){len++;tmp/=10;};FilLen=len;
 char *s=(char*)malloc(sizeof(char)*(9+len));if(!s){write(1,(char[]){101,114,114,32,97,108,108,111,99},9);exit(1);}

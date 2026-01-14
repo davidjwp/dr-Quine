@@ -15,22 +15,22 @@ section .data
 	10,'		xor rdx, rdx@',10,'		mov r8, rax!',10,10,'		dec r9b@',10,'		test r8b, r8b@',10,'		jnz L3!',10,10,'	mov [flnu], rdi#',\
 	10,'	ret!',10,10,'write:@',10,'	syscall@',10,'	ret!',10,10,'print:@',10,'	add rbx, r9!',10,10,'write_loop:@',10,'	syscall@',10,'	inc rsi#',\
 	10,'	mov r8b, byte [rsi]@',10,'	test r8b, r8b@',10,'	jne write_loop@',10,'	ret!',10,10,'eval:@',10,'	xor r8, r8@',10,'	lea r8, [rel loop]#',\
-	10,'	push r8@',10,'	mov r8b, [is_print]@',10,'	test r8b, r8b@',10,'	jne print@',10,'	inc rbx@',10,'	jmp end_cond!',10,10,'p_33:#',\
+	10,'	push r8@',10,'	mov r8b, [is_print]@',10,'	test r8b, r8b@',10,'	jne print@',10,'	inc rbx@',10,'	pop r8@',10,'	jmp end_cond!',10,10,'p_33:#',\
 	10,'	mov rsi, p_dnl@',10,'	mov r9, 3@',10,'	jmp eval!',10,10,'p_35:@',10,'	mov rsi, p_pnl@',10,'	mov r9, 2@',10,'	jmp eval!',10,10,'p_64:#',\
-	10,'	mov rsi, p_nl@',10,'	mov r9, 2@',10,'	jmp eval!',10,10,'p_73:@',10,'	lea rsi, [flnu + 6]@',10,'mov rsi, qword [flnu]@',10,'	add rsi, 6#',\
+	10,'	mov rsi, p_nl@',10,'	mov r9, 2@',10,'	jmp eval!',10,10,'p_73:@',10,'	lea rsi, [flnu + 6]@',10,'	mov rsi, qword [flnu]@',10,'	add rsi, 6#',\
 	10,'	mov r9b, byte [flnu_len]@',10,'	mov [rsi + r9], byte 0!',10,10,'	xor r8, r8@',10,'	mov r8b, [is_print]@',10,'	test r8b, r8b#',\
-	10,'	jz not_literal@',10,'	jmp end_cond@',10,'	not_literal!',10,10,'	call print@',10,'	mov r8, rdi@',10,'	mov rdi, qword [flnu]#',\
+	10,'	jz not_literal@',10,'	jmp end_cond@',10,'	not_literal:!',10,10,'	call print@',10,'	mov r8, rdi@',10,'	mov rdi, qword [flnu]#',\
 	10,'	mov rax, 12@',10,'	syscall!',10,10,'	mov rax, 1@',10,'	mov rdi, r8@',10,'	jmp loop!',10,10,'p_81:@',10,'	mov r8b, byte [is_print]#',\
 	10,'	test r8b, r8b@',10,'	jnz end_cond@',10,'	mov [is_print], byte 1@',10,'	mov rbx, qn@',10,'	mov rsi, p_quo@',10,'	call write#',\
 	10,'	jmp end_cond!',10,10,'end_print:@',10,'	mov rsi, p_end@',10,'	call write_loop@',10,'	lea rbx, [qn + 24]@',10,'	mov [is_print], byte 0#',\
 	10,'	jmp end_cond!',10,10,'_start:@',10,'	mov qword [init_int], I!',10,10,'	cmp qword [init_int], 0@',10,'	jz exit!',10,10,'start_loop:#',\
 	10,'	mov [flnu_len], byte 0@',10,'	call asmbl_fln!',10,10,'	mov rax, 2@',10,'	mov rsi, 02 | 0100@',10,'	mov rdx, 0422#',\
-	10,'	syscall!',10,10,'	mov rdi, rax!',10,10,'	mov [is_print], byte 0@',10,'	mov rbx, qn@',10,'	mov rdi, rax@',10,'	mov rax, 1#',\
+	10,'	syscall!',10,10,'	mov rdi, rax!',10,10,'	mov [is_print], byte 0@',10,'	mov rbx, qn@',10,'	mov rax, 1#',\
 	10,'	mov rdx, 1!',10,10,'	loop:@',10,'		cmp [rbx], byte 33@',10,'		je p_33@',10,'		cmp [rbx], byte 35@',10,'		je p_35#',\
 	10,'		cmp [rbx], byte 64@',10,'		je p_64@',10,'		cmp [rbx], byte 73@',10,'		je p_73@',10,'		cmp [rbx], byte 81#',\
 	10,'		je p_81!',10,10,'		end_cond:!',10,10,'		mov rsi, rbx@',10,'		call write@',10,'		inc rbx!',10,10,'		mov r8b, byte [rbx]#',\
-	10,'		test r8b, r8b@',10,'		jnz loop!',10,10,'		mov r8b, byte [is_print]@',10,'		test r8b, r8b#',\
-	10,'		jnz end_print!',10,10,'		mov r8, qword [init_int]@',10,'		dec r8@',10,'		mov qword [init_int], r8@',10,'		test r8, r8#',\
+	10,'		test r8b, r8b@',10,'		jnz loop!',10,10,'		mov r8b, byte [is_print]@',10,'		test r8b, r8b@',10,'		jnz end_print!',10,10,'		mov rax, 3#',\
+	10,'		syscall!',10,10,'		mov r8, qword [init_int]@',10,'		dec r8@',10,'		mov qword [init_int], r8@',10,'		test r8, r8#',\
 	10,'		jnz start_loop!',10,10,'		exit:@',10,'		mov rax, 60@',10,'		xor rdi, rdi@',10,'		syscall',0
 	p_nl db 64,39,44,49,48,44,39,0
 	p_pnl db 35,39,44,92,10,9,49,48,44,39,0
@@ -52,9 +52,9 @@ divide:
 	xor rdx, rdx
 	xor rax, rax
 	mov rax, r8
-    mov rcx, 0xa
-    div rcx
-    ret
+	mov rcx, 0xa
+	div rcx
+	ret
 
 asmbl_fln:
 	mov rax, 12
@@ -93,7 +93,7 @@ asmbl_fln:
 		inc rax
 		test cl, cl
 		jnz L2
-	xor rax, rax	
+	xor rax, rax
 	pop rdi
 
 	cmp [init_int], byte 0
@@ -205,7 +205,7 @@ end_print:
 	jmp end_cond
 
 _start:
-	mov qword [init_int], 1
+	mov qword [init_int], 5
 
 	cmp qword [init_int], 0
 	jz exit
@@ -218,7 +218,7 @@ start_loop:
 	mov rsi, 02 | 0100
 	mov rdx, 0422
 	syscall
-	
+
 	mov rdi, rax
 
 	mov [is_print], byte 0
@@ -251,6 +251,9 @@ start_loop:
 		mov r8b, byte [is_print]
 		test r8b, r8b
 		jnz end_print
+
+		mov rax, 3
+		syscall
 
 		mov r8, qword [init_int]
 		dec r8
