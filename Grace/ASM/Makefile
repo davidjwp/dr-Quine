@@ -8,15 +8,17 @@ SOBJS		= $(NAME).S
 
 SRCS		= $(NAME).s
 
+KID			= $(NAME)_kid.s
+
 $(NAME):
 	cpp -P $(SRCS) -o $(SOBJS)
 	nasm $(FLAGS) $(SOBJS) -o $(OBJS)
 	ld $(OBJS) -o $(NAME)
 	./$(NAME)
-	diff Grace_kid.s $(SRCS)
+	diff $(SRCS) $(KID)
 
 clean:
-	rm -f $(OBJS) $(SOBJS) Grace_kid.s 
+	rm -f $(OBJS) $(SOBJS) $(KID)
 
 fclean: clean
 	rm -f $(NAME)
