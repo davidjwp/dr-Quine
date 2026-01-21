@@ -10,6 +10,8 @@ SRCS		= $(NAME).s
 
 KID			= $(NAME)_kid.s
 
+all: $(NAME)
+
 $(NAME):
 	cpp -P $(SRCS) -o $(SOBJS)
 	nasm $(FLAGS) $(SOBJS) -o $(OBJS)

@@ -8,6 +8,8 @@ SOBJS		= $(NAME).S
 
 SRCS		= $(NAME).s
 
+all: $(NAME)
+
 $(NAME):
 	cpp -P $(SRCS) -o $(SOBJS)
 	nasm $(FLAGS) $(SOBJS) -o $(OBJS)

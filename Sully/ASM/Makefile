@@ -8,6 +8,8 @@ SRCS		= $(NAME).s
 
 OUTPUTS		= '$(NAME)_X'
 
+all:$(NAME)
+
 $(NAME):
 	nasm $(FLAGS) $(SRCS) -o $(OBJS)
 	ld $(OBJS) -o $(NAME)
