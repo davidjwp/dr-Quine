@@ -18,7 +18,7 @@ $(NAME): $(OBJS)
 	$(CC) -c $(CFLAGS) $< -o $@
 
 clean:
-	rm -f $(OBJS) Sully_*.c
+	rm -f $(OBJS) Sully_*.c Sully_*
 
 fclean: clean
 	rm -f $(NAME)
